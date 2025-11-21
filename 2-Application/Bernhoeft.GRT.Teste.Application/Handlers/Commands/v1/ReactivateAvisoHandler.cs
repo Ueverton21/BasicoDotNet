@@ -9,22 +9,22 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bernhoeft.GRT.Teste.Application.Handlers.Commands.v1;
-public class DeleteAvisoHandler : IRequestHandler<DeleteAvisoRequest, IOperationResult<bool>>
+public class ReactivateAvisoHandler : IRequestHandler<ReactivateAvisoRequest, IOperationResult<bool>>
 {
     private readonly IServiceProvider _serviceProvider;
     private IContext _context => _serviceProvider.GetRequiredService<IContext>();
     private IAvisoRepository _avisoRepository => _serviceProvider.GetRequiredService<IAvisoRepository>();
 
-    public DeleteAvisoHandler(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
+    public ReactivateAvisoHandler(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
-    public async Task<IOperationResult<bool>> Handle(DeleteAvisoRequest request, CancellationToken cancellationToken)
+    public async Task<IOperationResult<bool>> Handle(ReactivateAvisoRequest request, CancellationToken cancellationToken)
     {
         var aviso = await _avisoRepository.ObterAvisoPorIdAsync((int)request.Id, TrackingBehavior.NoTracking);
 
-        if (aviso is null || aviso.Ativo is false)
+        if (aviso is null)
             return OperationResult<bool>.ReturnNotFound();
 
-        aviso.Ativo = false;
+        aviso.Ativo = true;
         aviso.EditadoEm = DateTime.Now;
         _avisoRepository.Update(aviso);
         await _context.SaveChangesAsync(cancellationToken);

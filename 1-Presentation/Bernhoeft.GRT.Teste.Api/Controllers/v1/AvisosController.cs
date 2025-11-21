@@ -131,5 +131,29 @@ namespace Bernhoeft.GRT.Teste.Api.Controllers.v1
 
             return await Mediator.Send(request, cancellationToken);
         }
+        /// <summary>
+        /// Recuperação lógica de um aviso.
+        /// </summary>
+        /// <param name="id">Id do aviso</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Aviso.</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="400">Dados Inválidos.</response>
+        /// <response code="404">Aviso não Encontrado.</response>
+        [HttpPut("{id}/reativar")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<object> ReativarAviso([FromRoute] int id, CancellationToken cancellationToken)
+        {
+            //Garantir que a validação ocorra antes de chegar na camada de aplicação
+            var request = new ReactivateAvisoRequest(id);
+
+            var errors = FluentValidationErrors.Validate(new ReactivateAvisoRequestValidator().Validate(request));
+            if (errors != null)
+                return BadRequest(errors);
+
+            return await Mediator.Send(request, cancellationToken);
+        }
     }
 }
