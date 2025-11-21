@@ -21,7 +21,7 @@ public class ReactivateAvisoHandler : IRequestHandler<ReactivateAvisoRequest, IO
     {
         var aviso = await _avisoRepository.ObterAvisoPorIdAsync((int)request.Id, TrackingBehavior.NoTracking);
 
-        if (aviso is null)
+        if (aviso is null || aviso.Ativo is true)
             return OperationResult<bool>.ReturnNotFound();
 
         aviso.Ativo = true;
