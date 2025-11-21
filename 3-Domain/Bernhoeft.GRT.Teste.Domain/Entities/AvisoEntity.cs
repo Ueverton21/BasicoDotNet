@@ -5,6 +5,8 @@
         public int Id { get; private set; }
         public bool Ativo { get; set; } = true;
         public string Titulo { get; set; }
+        public DateTime CriadoEm { get; set; }
+        public DateTime? EditadoEm { get; set; }
         public string Mensagem { get; set; }
     }
 }

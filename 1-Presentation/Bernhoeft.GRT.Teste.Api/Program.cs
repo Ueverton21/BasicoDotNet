@@ -126,11 +126,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsStaging() || Debugger.I
     });
 }
 
-app.UseCors(options => options.WithOrigins()
-                              .AllowAnyHeader()
-                              .AllowAnyMethod()
-                              .AllowCredentials()
-                              .SetIsOriginAllowed(origin => true));
+app.UseCors(options => options
+    .WithOrigins()
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .SetIsOriginAllowed(origin => true));
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

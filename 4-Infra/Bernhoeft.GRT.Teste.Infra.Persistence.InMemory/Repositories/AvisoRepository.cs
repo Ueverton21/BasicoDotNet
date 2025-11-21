@@ -13,11 +13,16 @@ namespace Bernhoeft.GRT.ContractWeb.Infra.Persistence.SqlServer.ContractStore.Re
         public AvisoRepository(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
+        public Task<AvisoEntity> ObterAvisoPorIdAsync(int id, TrackingBehavior tracking = TrackingBehavior.Default, CancellationToken cancellationToken = default)
+        {
+            var query = tracking is TrackingBehavior.NoTracking ? Set.AsNoTrackingWithIdentityResolution() : Set;
+            return query.FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
+        }
 
         public Task<List<AvisoEntity>> ObterTodosAvisosAsync(TrackingBehavior tracking = TrackingBehavior.Default, CancellationToken cancellationToken = default)
         {
             var query = tracking is TrackingBehavior.NoTracking ? Set.AsNoTrackingWithIdentityResolution() : Set;
-            return query.ToListAsync();
+            return query.Where(a => a.Ativo).ToListAsync();
         }
     }
 }

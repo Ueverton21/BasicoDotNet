@@ -14,8 +14,6 @@ namespace Bernhoeft.GRT.Teste.Application.Handlers.Queries.v1
     public class GetAvisosHandler : IRequestHandler<GetAvisosRequest, IOperationResult<IEnumerable<GetAvisosResponse>>>
     {
         private readonly IServiceProvider _serviceProvider;
-
-        private IContext _context => _serviceProvider.GetRequiredService<IContext>();
         private IAvisoRepository _avisoRepository => _serviceProvider.GetRequiredService<IAvisoRepository>();
 
         public GetAvisosHandler(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
