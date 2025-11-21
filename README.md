@@ -64,7 +64,7 @@ Todos os endpoints da rota `/avisos` foram validados via **testes de integraçã
 
 ### ✔ 6. `PUT /avisos/{id}/reactivar`
 
-- Realiza soft delete
+- Realiza reativação
 - Retorna `400 BadRequest` para ID inválido (0 ou negativo)
 - Retorna `404 NotFound` para avisos já deletados ou inexistentes
 - Retorna `200 Ok` quando a reativação é bem-sucedido
@@ -76,7 +76,6 @@ Todos os endpoints da rota `/avisos` foram validados via **testes de integraçã
 Os testes garantem o funcionamento das principais regras:
 
 - Soft delete persistente
-- Filtro automático de registros deletados
 - Controle dos campos:
   - `CriadoEm`
   - `EditadoEm`
